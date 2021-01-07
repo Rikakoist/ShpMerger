@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1267
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShpMerger", "ShpMerger\ShpMerger.csproj", "{642DD5B3-2635-4930-93DB-1EB87E887893}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{642DD5B3-2635-4930-93DB-1EB87E887893}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{642DD5B3-2635-4930-93DB-1EB87E887893}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{642DD5B3-2635-4930-93DB-1EB87E887893}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{642DD5B3-2635-4930-93DB-1EB87E887893}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D176599B-EB45-417A-8C2C-C909C6FC918E}
+	EndGlobalSection
+EndGlobal
