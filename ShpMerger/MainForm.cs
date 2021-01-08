@@ -22,8 +22,9 @@ namespace ShpMerger
             string RD = @"D:\Desktop\Data";
             string FN = @"aanp.shp";
             MergeFunc MF = new MergeFunc(RD,FN);
-            MF.GetAllDir();
+            MF.GetAllChildDir();
             MF.GetShpFileNameList();
+            MF.Merge();
             Console.ReadKey(); 
         }
     }

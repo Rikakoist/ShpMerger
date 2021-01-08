@@ -30,8 +30,10 @@ namespace ShpMerger
         /// List of filenames.
         /// </summary>
         public List<string> FileList = new List<string>();
-
-        Merge Mg = new Merge();
+        /// <summary>
+        /// Output dataset.
+        /// </summary>
+        public string OutPutDir;
 
         /// <summary>
         /// Constructor.
@@ -50,7 +52,7 @@ namespace ShpMerger
         /// <summary>
         /// Get directories recursively.
         /// </summary>
-        public void GetAllDir()
+        public void GetAllChildDir()
         {
             if (!Directory.Exists(rootDir))
                 throw new DirectoryNotFoundException("Directory doesn't exist.");
@@ -60,7 +62,7 @@ namespace ShpMerger
             {
                 DirList.Add(d.FullName);
                 rootDir = d.FullName;
-                GetAllDir();
+                GetAllChildDir();
             }
         }
 
@@ -69,6 +71,9 @@ namespace ShpMerger
         /// </summary>
         public void GetShpFileNameList()
         {
+            if (DirList.Count <= 0)
+                return;
+
             FileList.Clear();
             foreach (string S in DirList)
             {
@@ -81,6 +86,14 @@ namespace ShpMerger
                         FileList.Add(FI.FullName);
                 }
             }
+        }
+
+        public void Merge()
+        {
+            Merge Mg = new Merge();
+            Mg.inputs = string.Join(";", FileList);
+            Mg.output = @"D:\Documents\ArcGIS\Default.gdb\test_Merge";
+            
         }
     }
 }
