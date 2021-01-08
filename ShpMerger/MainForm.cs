@@ -16,5 +16,15 @@ namespace ShpMerger
         {
             InitializeComponent();
         }
+
+        private void FormLoad(object sender, EventArgs e)
+        {
+            string RD = @"D:\Desktop\Data";
+            string FN = @"aanp.shp";
+            MergeFunc MF = new MergeFunc(RD,FN);
+            MF.GetAllDir();
+            MF.GetShpFileNameList();
+            Console.ReadKey(); 
+        }
     }
 }

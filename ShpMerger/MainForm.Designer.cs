@@ -52,6 +52,7 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = ".shp file merging applet";
+            this.Load += new System.EventHandler(this.FormLoad);
             ((System.ComponentModel.ISupportInitialize)(this.axLicenseControl1)).EndInit();
             this.ResumeLayout(false);
 
