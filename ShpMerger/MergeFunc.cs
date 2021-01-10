@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using ESRI.ArcGIS.DataManagementTools;
 using System.IO;
+using ESRI.ArcGIS.Geoprocessor;
+using System.Windows.Forms;
 
 namespace ShpMerger
 {
@@ -93,7 +95,15 @@ namespace ShpMerger
             Merge Mg = new Merge();
             Mg.inputs = string.Join(";", FileList);
             Mg.output = @"D:\Documents\ArcGIS\Default.gdb\test_Merge";
-            
+            Geoprocessor GP = new Geoprocessor();
+            try
+            {
+                GP.Execute(Mg,null);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
     }
 }

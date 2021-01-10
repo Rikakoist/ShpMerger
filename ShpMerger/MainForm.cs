@@ -19,13 +19,12 @@ namespace ShpMerger
 
         private void FormLoad(object sender, EventArgs e)
         {
-            string RD = @"D:\Desktop\Data";
+            string RD = @"D:\Desktop\teatdt";
             string FN = @"aanp.shp";
             MergeFunc MF = new MergeFunc(RD,FN);
             MF.GetAllChildDir();
             MF.GetShpFileNameList();
             MF.Merge();
-            Console.ReadKey(); 
         }
     }
 }
