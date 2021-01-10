@@ -38,6 +38,8 @@
             this.FileNameTextBox = new System.Windows.Forms.TextBox();
             this.ExecBtn = new System.Windows.Forms.Button();
             this.CancelBtn = new System.Windows.Forms.Button();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.MgProgressBar = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.axLicenseControl1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -45,7 +47,7 @@
             // 
             this.axLicenseControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.axLicenseControl1.Enabled = true;
-            this.axLicenseControl1.Location = new System.Drawing.Point(441, 194);
+            this.axLicenseControl1.Location = new System.Drawing.Point(431, 155);
             this.axLicenseControl1.Name = "axLicenseControl1";
             this.axLicenseControl1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axLicenseControl1.OcxState")));
             this.axLicenseControl1.Size = new System.Drawing.Size(32, 32);
@@ -69,6 +71,7 @@
             this.RootDirBtn.TabIndex = 0;
             this.RootDirBtn.Text = "Browse...";
             this.RootDirBtn.UseVisualStyleBackColor = true;
+            this.RootDirBtn.Click += new System.EventHandler(this.SelectFolder);
             // 
             // RootDirLabel
             // 
@@ -97,6 +100,7 @@
             this.FileNameBtn.TabIndex = 2;
             this.FileNameBtn.Text = "Browse...";
             this.FileNameBtn.UseVisualStyleBackColor = true;
+            this.FileNameBtn.Click += new System.EventHandler(this.SelectFile);
             // 
             // FileNameTextBox
             // 
@@ -115,6 +119,7 @@
             this.ExecBtn.TabIndex = 6;
             this.ExecBtn.Text = "Execute";
             this.ExecBtn.UseVisualStyleBackColor = true;
+            this.ExecBtn.Click += new System.EventHandler(this.ExecMerge);
             // 
             // CancelBtn
             // 
@@ -125,11 +130,27 @@
             this.CancelBtn.Text = "Cancel";
             this.CancelBtn.UseVisualStyleBackColor = true;
             // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.WorkerReportsProgress = true;
+            this.backgroundWorker1.WorkerSupportsCancellation = true;
+            // 
+            // MgProgressBar
+            // 
+            this.MgProgressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.MgProgressBar.Location = new System.Drawing.Point(12, 193);
+            this.MgProgressBar.Name = "MgProgressBar";
+            this.MgProgressBar.Size = new System.Drawing.Size(451, 24);
+            this.MgProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.MgProgressBar.TabIndex = 7;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(475, 226);
+            this.Controls.Add(this.MgProgressBar);
             this.Controls.Add(this.CancelBtn);
             this.Controls.Add(this.ExecBtn);
             this.Controls.Add(this.FileNameLabel);
@@ -161,6 +182,8 @@
         private System.Windows.Forms.TextBox FileNameTextBox;
         private System.Windows.Forms.Button ExecBtn;
         private System.Windows.Forms.Button CancelBtn;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.ProgressBar MgProgressBar;
     }
 }
 

@@ -13,6 +13,22 @@ namespace ShpMerger
     public class MergeFunc
     {
         /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="rootDir">Root directory.</param>
+        /// <param name="fileName">Specified filename.</param>
+        public MergeFunc(string rootDir, string fileName)
+        {
+            if (!Directory.Exists(rootDir))
+                throw new DirectoryNotFoundException("Directory doesn't exist.");
+
+           OutPutDir= this.rootDir = RootDir = rootDir;
+            FileName = fileName;
+            GP.ProgressChanged += GPProgressChanged;
+            GP.ToolExecuted += GPExecuted;
+        }
+
+        /// <summary>
         /// Root directory.
         /// </summary>
         public string RootDir;
@@ -36,19 +52,28 @@ namespace ShpMerger
         /// Output dataset.
         /// </summary>
         public string OutPutDir;
-
         /// <summary>
-        /// Constructor.
+        /// Geoprocessor.
         /// </summary>
-        /// <param name="rootDir">Root directory.</param>
-        /// <param name="fileName">Specified filename.</param>
-        public MergeFunc(string rootDir, string fileName)
+        Geoprocessor GP = new Geoprocessor()
         {
-            if (!Directory.Exists(rootDir))
-                throw new DirectoryNotFoundException("Directory doesn't exist.");
+            OverwriteOutput = true
+        };
 
-            this.rootDir = RootDir = rootDir;
-            FileName = fileName;
+        public delegate void ProgressChangedEventHander(object sender, ProgressChangedEventArgs e);
+        public event ProgressChangedEventHander ProgressChanged;
+
+        public delegate void ExecutedEventHander(object sender, ToolExecutedEventArgs e);
+        public event ExecutedEventHander Executed;
+
+        private void GPProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            ProgressChanged?.Invoke(sender, e);
+        }
+
+        private void GPExecuted(object sender, ToolExecutedEventArgs e)
+        {
+            Executed?.Invoke(sender, e);
         }
 
         /// <summary>
@@ -94,8 +119,8 @@ namespace ShpMerger
         {
             Merge Mg = new Merge();
             Mg.inputs = string.Join(";", FileList);
-            Mg.output = @"D:\Documents\ArcGIS\Default.gdb\test_Merge";
-            Geoprocessor GP = new Geoprocessor();
+            Mg.output = Path.Combine(OutPutDir,string.Concat(DT(),"_merge_",FileName)); 
+            
             try
             {
                 GP.Execute(Mg,null);
@@ -104,6 +129,11 @@ namespace ShpMerger
             {
                 MessageBox.Show(ex.ToString());
             }
+        }
+
+        private static string DT()
+        {
+            return DateTime.Now.ToString("yyyyMMddHHmmss");
         }
     }
 }
