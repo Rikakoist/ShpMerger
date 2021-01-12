@@ -87,6 +87,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -109,6 +110,7 @@
     <EmbeddedResource Include="Merger.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Properties\MgSettings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>MgSettings.Designer.cs</LastGenOutput>

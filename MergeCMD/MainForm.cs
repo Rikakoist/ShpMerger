@@ -21,12 +21,19 @@ namespace MergeCMD
 
         public string RootDir = string.Empty;
         public string Filename = string.Empty;
+        public string OutDir = string.Empty;
+        public bool AddOutputsToMap = false;
+        public bool OverwriteOutput = false;
         MgSettings MS = new MgSettings();
 
         private void FormLoad(object sender, EventArgs e)
-        {
+        { 
             RootDirTextBox.DataBindings.Add(nameof(TextBox.Text), MS, nameof(MS.RootDir));
             FileNameTextBox.DataBindings.Add(nameof(TextBox.Text), MS, nameof(MS.Filename));
+            OutDirTextBox.DataBindings.Add(nameof(TextBox.Text), MS, nameof(MS.OutDir));
+            OverwriteOptCheckBox.DataBindings.Add(nameof(CheckBox.Checked), MS, nameof(MS.OverwriteOutput));
+            AddData2MapCheckBox.DataBindings.Add(nameof(CheckBox.Checked),MS,nameof(MS.AddToMapWhenFinished));
+            SaveToRootDirCheckBox.DataBindings.Add(nameof(CheckBox.Checked), MS, nameof(MS.SaveToRootDir));
         }
 
         private void SelectFolder(object sender, EventArgs e)
@@ -62,18 +69,31 @@ namespace MergeCMD
             OFD.Dispose();
         }
 
+        private void SaveToRootChanged(object sender, EventArgs e)
+        {
+            OutDirBtn.Enabled = OutDirTextBox.Enabled = !SaveToRootDirCheckBox.Checked;
+        }
+
         private void ExecMerge(object sender, EventArgs e)
         {
             RootDir = RootDirTextBox.Text;
             Filename = FileNameTextBox.Text;
-            if (string.IsNullOrWhiteSpace(RootDir) || (!Directory.Exists(RootDir)))
+            OutDir = SaveToRootDirCheckBox.Checked ? RootDir : OutDirTextBox.Text;
+            AddOutputsToMap = AddData2MapCheckBox.Checked;
+            OverwriteOutput = OverwriteOptCheckBox.Checked;
+            if (Common.IsPathInValid(RootDir))
             {
-                MessageBox.Show("Invalid folder path.");
+                MessageBox.Show("Invalid root folder path.");
                 return;
             }
-            if (string.IsNullOrWhiteSpace(Filename) || (Filename.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0))
+            if (Common.IsFileInValid(Filename))
             {
                 MessageBox.Show("Invalid filename.");
+                return;
+            }
+            if (Common.IsPathInValid(OutDir))
+            {
+                MessageBox.Show("Invalid output folder path.");
                 return;
             }
             MS.Save();

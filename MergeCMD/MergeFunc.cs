@@ -21,23 +21,20 @@ namespace MergeCMD
         /// </summary>
         /// <param name="rootDir">Root directory.</param>
         /// <param name="fileName">Specified filename.</param>
-        public MergeFunc(string rootDir, string fileName)
+        public MergeFunc(string rootDir, string fileName, string outDir)
         {
             if (!Directory.Exists(rootDir))
                 throw new DirectoryNotFoundException("Directory doesn't exist.");
 
-           OutPutDir= this.rootDir = RootDir = rootDir;
+            RootDir = rootDir;
             FileName = fileName;
+            OutputDir = Directory.Exists(outDir) ? outDir : Environment.SpecialFolder.Personal.ToString();
         }
 
         /// <summary>
         /// Root directory.
         /// </summary>
         public string RootDir;
-        /// <summary>
-        /// Temp root directory.
-        /// </summary>
-        private string rootDir;
         /// <summary>
         /// Directory list.
         /// </summary>
@@ -49,90 +46,32 @@ namespace MergeCMD
         /// <summary>
         /// List of filenames.
         /// </summary>
-        public List<string> FileList = new List<string>();
+        public List<string> FileList;
         /// <summary>
         /// Output dataset.
         /// </summary>
-        public string OutPutDir;
+        public string OutputDir;
 
         /// <summary>
         /// Merge tool.
         /// </summary>
         public Merge Mg = new Merge();
 
-        public delegate void ProgressChangedEventHander(object sender, ProgressChangedEventArgs e);
-        public event ProgressChangedEventHander ProgressChanged;
-
-        public delegate void ExecutedEventHander(object sender, ToolExecutedEventArgs e);
-        public event ExecutedEventHander Executed;
-
-        private void GPProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            ProgressChanged?.Invoke(sender, e);
-        }
-
-        private void GPExecuted(object sender, ToolExecutedEventArgs e)
-        {
-            Executed?.Invoke(sender, e);
-        }
-
-
         public Merge GetMerge()
         {
-            GetAllChildDir();
-            GetShpFileNameList();
+            Common.GetAllChildDir(RootDir, ref DirList);
+            FileList = Common.GetFileNameList(DirList, FileName);
             SetMergeParam();
             return Mg;
         }
 
         /// <summary>
-        /// Get directories recursively.
+        /// Set params of the tool.
         /// </summary>
-        public void GetAllChildDir()
-        {
-            if (!Directory.Exists(rootDir))
-                throw new DirectoryNotFoundException("Directory doesn't exist.");
-
-            DirectoryInfo directoryInfo = new DirectoryInfo(rootDir);
-            foreach (DirectoryInfo d in directoryInfo.GetDirectories())
-            {
-                DirList.Add(d.FullName);
-                rootDir = d.FullName;
-                GetAllChildDir();
-            }
-        }
-
-        /// <summary>
-        /// Search specified filename in given directories.
-        /// </summary>
-        public void GetShpFileNameList()
-        {
-            if (DirList.Count <= 0)
-                return;
-
-            FileList.Clear();
-            foreach (string S in DirList)
-            {
-                DirectoryInfo DI = new DirectoryInfo(S);
-                //FileInfo FI = DI.GetFiles(filename);
-                //if(FI!=null)
-                foreach (FileInfo FI in DI.GetFiles())
-                {
-                    if (FI.Name == FileName)
-                        FileList.Add(FI.FullName);
-                }
-            }
-        }
-
         public void SetMergeParam()
         {
             Mg.inputs = string.Join(";", FileList);
-            Mg.output = Path.Combine(OutPutDir,string.Concat(DT(),"_merge_",FileName));      
-        }
-
-        private static string DT()
-        {
-            return DateTime.Now.ToString("yyyyMMddHHmmss");
+            Mg.output = Path.Combine(OutputDir, string.Concat(Common.DT(), "_merge_", FileName));
         }
     }
 }

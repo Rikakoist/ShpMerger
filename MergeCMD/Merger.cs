@@ -88,10 +88,10 @@ namespace MergeCMD
             // TODO: Define values for the public properties
             //
             base.m_category = "GraduationProj"; //localizable text
-            base.m_caption = "Merge";  //localizable text 
-            base.m_message = "Merge feature.";  //localizable text
-            base.m_toolTip = "";  //localizable text
-            base.m_name = "VectMerge";   //unique id, non-localizable (e.g. "MyCategory_MyCommand")
+            base.m_caption = "Feature merge (batch)";  //localizable text 
+            base.m_message = "Merge feature file in selected directory (recursively).";  //localizable text
+            base.m_toolTip = "Batch feature merge tool v1.0(20210112)";  //localizable text
+            base.m_name = "FeatureMerge";   //unique id, non-localizable (e.g. "MyCategory_MyCommand")
 
             try
             {
@@ -150,16 +150,22 @@ namespace MergeCMD
             if (!Directory.Exists(MS.RootDir))
             {
                 MS.RootDir = Environment.SpecialFolder.MyDocuments.ToString();
-                MS.Save();
             }
+            if(!Directory.Exists(MS.OutDir))
+            {
+                MS.OutDir = MS.RootDir;
+            }
+            MS.Save();
+
             MainForm M = new MainForm();
             if (M.ShowDialog() == DialogResult.OK)
             {
-                MergeFunc MF = new MergeFunc(M.RootDir, M.Filename);
+                MergeFunc MF = new MergeFunc(M.RootDir, M.Filename,M.OutDir);
 
                 Geoprocessor GP = new Geoprocessor()
                 {
-                    OverwriteOutput = true
+                    AddOutputsToMap = M.AddOutputsToMap,
+                    OverwriteOutput = M.OverwriteOutput               
                 };
 
                 GP.ToolExecuting += GP_ToolExecuting;
@@ -167,12 +173,10 @@ namespace MergeCMD
                 TM.Tick += TM_Tick;
 
                 ITrackCancel pTrackCancel = new CancelTrackerClass();
-
-                //Create the ProgressDialog. This automatically displays the dialog
                 IProgressDialogFactory pProgDlgFactory = new ProgressDialogFactoryClass();
                 pProDlg = pProgDlgFactory.Create(pTrackCancel, m_application.hWnd) as IProgressDialog2;
                 pProDlg.CancelEnabled = true;
-                pProDlg.Title = "Merging in progress...";
+                pProDlg.Title = "Merge in progress...";
                 pProDlg.Description = "Please wait patiently...";
 
                 pProDlg.Animation = esriProgressAnimationTypes.esriProgressSpiral;
@@ -187,11 +191,9 @@ namespace MergeCMD
             }
         }
 
-
         private void TM_Tick(object sender, EventArgs e)
         {
-            TimeSpan ts = SW.Elapsed;
-            pStepPro.Message = string.Format("Merging...({0:00}:{1:00}:{2:00})", ts.Hours, ts.Minutes, ts.Seconds);
+            pStepPro.Message = string.Format("Merging...({0})", SW.Elapsed.ToString("hh\\:mm\\:ss"));
         }
 
         private void GP_ToolExecuting(object sender, ToolExecutingEventArgs e)
@@ -203,9 +205,9 @@ namespace MergeCMD
 
         private void GP_ToolExecuted(object sender, ToolExecutedEventArgs e)
         {
-            pStepPro.Message = "Finished...";
             TM.Stop();
             SW.Stop();
+            pStepPro.Message = string.Format("Finished...({0})", SW.Elapsed.ToString("hh\\:mm\\:ss"));
             Thread.Sleep(1000);
             pProDlg.HideDialog();
         }

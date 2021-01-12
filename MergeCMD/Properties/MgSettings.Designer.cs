@@ -46,5 +46,53 @@ namespace MergeCMD.Properties {
                 this["Filename"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool OverwriteOutput {
+            get {
+                return ((bool)(this["OverwriteOutput"]));
+            }
+            set {
+                this["OverwriteOutput"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AddToMapWhenFinished {
+            get {
+                return ((bool)(this["AddToMapWhenFinished"]));
+            }
+            set {
+                this["AddToMapWhenFinished"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string OutDir {
+            get {
+                return ((string)(this["OutDir"]));
+            }
+            set {
+                this["OutDir"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool SaveToRootDir {
+            get {
+                return ((bool)(this["SaveToRootDir"]));
+            }
+            set {
+                this["SaveToRootDir"] = value;
+            }
+        }
     }
 }
