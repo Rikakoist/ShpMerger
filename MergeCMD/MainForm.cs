@@ -25,10 +25,8 @@ namespace MergeCMD
 
         private void FormLoad(object sender, EventArgs e)
         {
-            RootDirTextBox.Text = MS.RootDir;
-            FileNameTextBox.Text = MS.Filename;
-            //RootDirTextBox.DataBindings.Add(nameof(TextBox.Text), MS, nameof(MS.RootDir));
-            //FileNameTextBox.DataBindings.Add(nameof(TextBox.Text), MS, nameof(MS.Filename));
+            RootDirTextBox.DataBindings.Add(nameof(TextBox.Text), MS, nameof(MS.RootDir));
+            FileNameTextBox.DataBindings.Add(nameof(TextBox.Text), MS, nameof(MS.Filename));
         }
 
         private void SelectFolder(object sender, EventArgs e)
@@ -39,7 +37,7 @@ namespace MergeCMD
             };
             if (FBD.ShowDialog() == DialogResult.OK)
             {
-                MS.RootDir = RootDirTextBox.Text = FBD.SelectedPath;
+                MS.RootDir = FBD.SelectedPath;
             }
             FBD.Dispose();
         }
@@ -50,6 +48,8 @@ namespace MergeCMD
             {
                 AddExtension = true,
                 AutoUpgradeEnabled = true,
+                Filter = "shp files (*.shp)|*.shp|All files (*.*)|*.*",
+                FilterIndex = 1,
                 InitialDirectory = MS.RootDir,
                 Multiselect = false,
                 RestoreDirectory = true,
@@ -57,7 +57,7 @@ namespace MergeCMD
             };
             if (OFD.ShowDialog() == DialogResult.OK)
             {
-                MS.Filename =FileNameTextBox.Text =new FileInfo(OFD.FileName).Name;
+                MS.Filename =new FileInfo(OFD.FileName).Name;
             }
             OFD.Dispose();
         }
@@ -78,6 +78,11 @@ namespace MergeCMD
             }
             MS.Save();
             DialogResult = DialogResult.OK;
+        }
+
+        private void CancelMerge(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
         }
     }
 }

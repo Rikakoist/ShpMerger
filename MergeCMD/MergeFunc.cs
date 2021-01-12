@@ -28,8 +28,6 @@ namespace MergeCMD
 
            OutPutDir= this.rootDir = RootDir = rootDir;
             FileName = fileName;
-            GP.ProgressChanged += GPProgressChanged;
-            GP.ToolExecuted += GPExecuted;
         }
 
         /// <summary>
@@ -56,13 +54,11 @@ namespace MergeCMD
         /// Output dataset.
         /// </summary>
         public string OutPutDir;
+
         /// <summary>
-        /// Geoprocessor.
+        /// Merge tool.
         /// </summary>
-        Geoprocessor GP = new Geoprocessor()
-        {
-            OverwriteOutput = true
-        };
+        public Merge Mg = new Merge();
 
         public delegate void ProgressChangedEventHander(object sender, ProgressChangedEventArgs e);
         public event ProgressChangedEventHander ProgressChanged;
@@ -78,6 +74,15 @@ namespace MergeCMD
         private void GPExecuted(object sender, ToolExecutedEventArgs e)
         {
             Executed?.Invoke(sender, e);
+        }
+
+
+        public Merge GetMerge()
+        {
+            GetAllChildDir();
+            GetShpFileNameList();
+            SetMergeParam();
+            return Mg;
         }
 
         /// <summary>
@@ -119,40 +124,10 @@ namespace MergeCMD
             }
         }
 
-        public void Merge()
+        public void SetMergeParam()
         {
-            Merge Mg = new Merge();
             Mg.inputs = string.Join(";", FileList);
-            Mg.output = Path.Combine(OutPutDir,string.Concat(DT(),"_merge_",FileName)); 
-            
-            try
-            {
-                //Create a CancelTracker.
-                ITrackCancel pTrackCancel = new CancelTrackerClass();
-
-                //Create the ProgressDialog. This automatically displays the dialog
-                IProgressDialogFactory pProgDlgFactory = new ProgressDialogFactoryClass();
-                IProgressDialog2 pProDlg = pProgDlgFactory.Create(pTrackCancel, 0) as IProgressDialog2;
-                pProDlg.CancelEnabled = true;
-                pProDlg.Title = "Merging...";
-                pProDlg.Description = "Please wait patiently...";
-
-                pProDlg.Animation = esriProgressAnimationTypes.esriProgressSpiral;
-
-                IStepProgressor pStepPro = pProDlg as IStepProgressor;
-                pStepPro.MinRange = 0;
-                pStepPro.MaxRange = 100;
-                pStepPro.StepValue = 1;
-                pStepPro.Message = "Initiating...";
-
-
-                GP.Execute(Mg,pTrackCancel);
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-                Executed?.Invoke(null, null);
-            }
+            Mg.output = Path.Combine(OutPutDir,string.Concat(DT(),"_merge_",FileName));      
         }
 
         private static string DT()

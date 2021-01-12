@@ -8,6 +8,11 @@ using ESRI.ArcGIS.Controls;
 using ESRI.ArcGIS.Framework;
 using System.Windows.Forms;
 using MergeCMD.Properties;
+using ESRI.ArcGIS.esriSystem;
+using ESRI.ArcGIS.Display;
+using ESRI.ArcGIS.Geoprocessor;
+using System.Threading;
+using System.Diagnostics;
 
 namespace MergeCMD
 {
@@ -71,6 +76,11 @@ namespace MergeCMD
 
         private IHookHelper m_hookHelper = null;
         IApplication m_application;
+        IProgressDialog2 pProDlg;
+        IStepProgressor pStepPro;
+        Stopwatch SW = new Stopwatch();
+        System.Windows.Forms.Timer TM = new System.Windows.Forms.Timer();
+
 
         public Merger()
         {
@@ -143,14 +153,61 @@ namespace MergeCMD
                 MS.Save();
             }
             MainForm M = new MainForm();
-                if(M.ShowDialog()==DialogResult.OK)
+            if (M.ShowDialog() == DialogResult.OK)
             {
-                
                 MergeFunc MF = new MergeFunc(M.RootDir, M.Filename);
-                MF.GetAllChildDir();
-                MF.GetShpFileNameList();
-                MF.Merge();
+
+                Geoprocessor GP = new Geoprocessor()
+                {
+                    OverwriteOutput = true
+                };
+
+                GP.ToolExecuting += GP_ToolExecuting;
+                GP.ToolExecuted += GP_ToolExecuted;
+                TM.Tick += TM_Tick;
+
+                ITrackCancel pTrackCancel = new CancelTrackerClass();
+
+                //Create the ProgressDialog. This automatically displays the dialog
+                IProgressDialogFactory pProgDlgFactory = new ProgressDialogFactoryClass();
+                pProDlg = pProgDlgFactory.Create(pTrackCancel, m_application.hWnd) as IProgressDialog2;
+                pProDlg.CancelEnabled = true;
+                pProDlg.Title = "Merging in progress...";
+                pProDlg.Description = "Please wait patiently...";
+
+                pProDlg.Animation = esriProgressAnimationTypes.esriProgressSpiral;
+
+                pStepPro = pProDlg as IStepProgressor;
+                pStepPro.MinRange = 0;
+                pStepPro.MaxRange = 100;
+                pStepPro.StepValue = 1;
+                pStepPro.Message = "Initiating...";
+
+                GP.Execute(MF.GetMerge(), pTrackCancel);
             }
+        }
+
+
+        private void TM_Tick(object sender, EventArgs e)
+        {
+            TimeSpan ts = SW.Elapsed;
+            pStepPro.Message = string.Format("Merging...({0:00}:{1:00}:{2:00})", ts.Hours, ts.Minutes, ts.Seconds);
+        }
+
+        private void GP_ToolExecuting(object sender, ToolExecutingEventArgs e)
+        {
+            pStepPro.Message = "Merging...";
+            TM.Start();
+            SW.Start();
+        }
+
+        private void GP_ToolExecuted(object sender, ToolExecutedEventArgs e)
+        {
+            pStepPro.Message = "Finished...";
+            TM.Stop();
+            SW.Stop();
+            Thread.Sleep(1000);
+            pProDlg.HideDialog();
         }
 
         #endregion
