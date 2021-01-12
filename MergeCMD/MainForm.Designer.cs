@@ -1,4 +1,4 @@
-﻿namespace ShpMerger
+﻿namespace MergeCMD
 {
     partial class MainForm
     {
@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.axLicenseControl1 = new ESRI.ArcGIS.Controls.AxLicenseControl();
             this.RootDirTextBox = new System.Windows.Forms.TextBox();
             this.RootDirBtn = new System.Windows.Forms.Button();
             this.RootDirLabel = new System.Windows.Forms.Label();
@@ -40,18 +39,7 @@
             this.CancelBtn = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.MgProgressBar = new System.Windows.Forms.ProgressBar();
-            ((System.ComponentModel.ISupportInitialize)(this.axLicenseControl1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // axLicenseControl1
-            // 
-            this.axLicenseControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.axLicenseControl1.Enabled = true;
-            this.axLicenseControl1.Location = new System.Drawing.Point(431, 155);
-            this.axLicenseControl1.Name = "axLicenseControl1";
-            this.axLicenseControl1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axLicenseControl1.OcxState")));
-            this.axLicenseControl1.Size = new System.Drawing.Size(32, 32);
-            this.axLicenseControl1.TabIndex = 0;
             // 
             // RootDirTextBox
             // 
@@ -159,13 +147,10 @@
             this.Controls.Add(this.RootDirLabel);
             this.Controls.Add(this.RootDirBtn);
             this.Controls.Add(this.RootDirTextBox);
-            this.Controls.Add(this.axLicenseControl1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = ".shp file merging applet";
-            this.Load += new System.EventHandler(this.FormLoad);
-            ((System.ComponentModel.ISupportInitialize)(this.axLicenseControl1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -173,7 +158,6 @@
 
         #endregion
 
-        private ESRI.ArcGIS.Controls.AxLicenseControl axLicenseControl1;
         private System.Windows.Forms.TextBox RootDirTextBox;
         private System.Windows.Forms.Button RootDirBtn;
         private System.Windows.Forms.Label RootDirLabel;
@@ -184,6 +168,6 @@
         private System.Windows.Forms.Button CancelBtn;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.ProgressBar MgProgressBar;
+
     }
 }
-

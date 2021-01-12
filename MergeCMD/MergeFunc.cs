@@ -12,7 +12,7 @@ using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Display;
 using System.Diagnostics;
 
-namespace ShpMerger
+namespace MergeCMD
 {
     public class MergeFunc
     {
@@ -127,26 +127,26 @@ namespace ShpMerger
             
             try
             {
-                ////Create a CancelTracker.
-                //ITrackCancel pTrackCancel = new CancelTrackerClass();
+                //Create a CancelTracker.
+                ITrackCancel pTrackCancel = new CancelTrackerClass();
 
-                ////Create the ProgressDialog. This automatically displays the dialog
-                //IProgressDialogFactory pProgDlgFactory = new ProgressDialogFactoryClass();
-                //IProgressDialog2 pProDlg = pProgDlgFactory.Create(pTrackCancel, 0) as IProgressDialog2;
-                //pProDlg.CancelEnabled = true;
-                //pProDlg.Title = "Merging...";
-                //pProDlg.Description = "Please wait patiently...";
+                //Create the ProgressDialog. This automatically displays the dialog
+                IProgressDialogFactory pProgDlgFactory = new ProgressDialogFactoryClass();
+                IProgressDialog2 pProDlg = pProgDlgFactory.Create(pTrackCancel, 0) as IProgressDialog2;
+                pProDlg.CancelEnabled = true;
+                pProDlg.Title = "Merging...";
+                pProDlg.Description = "Please wait patiently...";
 
-                //pProDlg.Animation = esriProgressAnimationTypes.esriProgressSpiral;
+                pProDlg.Animation = esriProgressAnimationTypes.esriProgressSpiral;
 
-                //IStepProgressor pStepPro = pProDlg as IStepProgressor;
-                //pStepPro.MinRange = 0;
-                //pStepPro.MaxRange = 100;
-                //pStepPro.StepValue = 1;
-                //pStepPro.Message = "Initiating...";
+                IStepProgressor pStepPro = pProDlg as IStepProgressor;
+                pStepPro.MinRange = 0;
+                pStepPro.MaxRange = 100;
+                pStepPro.StepValue = 1;
+                pStepPro.Message = "Initiating...";
 
-                
-                GP.Execute(Mg,null);
+
+                GP.Execute(Mg,pTrackCancel);
             }
             catch(Exception ex)
             {

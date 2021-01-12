@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
+using MergeCMD.Properties;
 
-namespace ShpMerger
+namespace MergeCMD
 {
     public partial class MainForm : Form
     {
@@ -18,12 +19,16 @@ namespace ShpMerger
             InitializeComponent();
         }
 
+        public string RootDir = string.Empty;
+        public string Filename = string.Empty;
         MgSettings MS = new MgSettings();
 
         private void FormLoad(object sender, EventArgs e)
         {
-            RootDirTextBox.DataBindings.Add(nameof(TextBox.Text),MS,nameof(MS.RootDir));
-            FileNameTextBox.DataBindings.Add(nameof(TextBox.Text), MS, nameof(MS.Filename));
+            RootDirTextBox.Text = MS.RootDir;
+            FileNameTextBox.Text = MS.Filename;
+            //RootDirTextBox.DataBindings.Add(nameof(TextBox.Text), MS, nameof(MS.RootDir));
+            //FileNameTextBox.DataBindings.Add(nameof(TextBox.Text), MS, nameof(MS.Filename));
         }
 
         private void SelectFolder(object sender, EventArgs e)
@@ -32,9 +37,9 @@ namespace ShpMerger
             {
                 Description = "Select root path..."
             };
-            if(FBD.ShowDialog()==DialogResult.OK)
+            if (FBD.ShowDialog() == DialogResult.OK)
             {
-                MS.RootDir = FBD.SelectedPath;
+                MS.RootDir = RootDirTextBox.Text = FBD.SelectedPath;
             }
             FBD.Dispose();
         }
@@ -52,47 +57,27 @@ namespace ShpMerger
             };
             if (OFD.ShowDialog() == DialogResult.OK)
             {
-                MS.Filename = new FileInfo(OFD.FileName).Name;
+                MS.Filename =FileNameTextBox.Text =new FileInfo(OFD.FileName).Name;
             }
             OFD.Dispose();
         }
 
         private void ExecMerge(object sender, EventArgs e)
         {
-            string rootDir = RootDirTextBox.Text;
-            string fileName = FileNameTextBox.Text;
-            if (string.IsNullOrWhiteSpace(rootDir) || (!Directory.Exists(rootDir)))
+            RootDir = RootDirTextBox.Text;
+            Filename = FileNameTextBox.Text;
+            if (string.IsNullOrWhiteSpace(RootDir) || (!Directory.Exists(RootDir)))
             {
                 MessageBox.Show("Invalid folder path.");
                 return;
             }
-            if (string.IsNullOrWhiteSpace(fileName) || (fileName.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0))
+            if (string.IsNullOrWhiteSpace(Filename) || (Filename.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0))
             {
                 MessageBox.Show("Invalid filename.");
                 return;
             }
             MS.Save();
-            ExecBtn.Enabled = false;
-            CancelBtn.Enabled = true;
-
-            MergeFunc MF = new MergeFunc(rootDir, fileName);
-            MF.ProgressChanged += MF_ProgressChanged;
-            MF.Executed += MF_Executed;
-            MF.GetAllChildDir();
-            MF.GetShpFileNameList();
-            MF.Merge();
-        }
-
-        private void MF_Executed(object sender, ESRI.ArcGIS.Geoprocessor.ToolExecutedEventArgs e)
-        {
-            ExecBtn.Enabled = true;
-            CancelBtn.Enabled = false;
-        }
-
-        private void MF_ProgressChanged(object sender, ESRI.ArcGIS.Geoprocessor.ProgressChangedEventArgs e)
-        {
-            MgProgressBar.Value = (int)(e.ProgressPercentage * 100);
-            Refresh();
+            DialogResult = DialogResult.OK;
         }
     }
 }
