@@ -88,10 +88,10 @@ namespace MergeCMD
             // TODO: Define values for the public properties
             //
             base.m_category = "GraduationProj"; //localizable text
-            base.m_caption = "Feature merge (batch)";  //localizable text 
-            base.m_message = "Merge feature file in selected directory (recursively).";  //localizable text
-            base.m_toolTip = "Batch feature merge tool v1.0(20210112)";  //localizable text
-            base.m_name = "FeatureMerge";   //unique id, non-localizable (e.g. "MyCategory_MyCommand")
+            base.m_caption = "Shapefile merge (batch)";  //localizable text 
+            base.m_message = "Merge .shp file in selected directory (recursively).";  //localizable text
+            base.m_toolTip = "Batch Shapefile merge tool v1.1(20210113)";  //localizable text
+            base.m_name = "ShpMerge";   //unique id, non-localizable (e.g. "MyCategory_MyCommand")
 
             try
             {
@@ -149,7 +149,7 @@ namespace MergeCMD
             MgSettings MS = new MgSettings();
             if (!Directory.Exists(MS.RootDir))
             {
-                MS.RootDir = Environment.SpecialFolder.MyDocuments.ToString();
+                MS.RootDir = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
             }
             if(!Directory.Exists(MS.OutDir))
             {

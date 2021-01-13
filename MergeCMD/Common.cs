@@ -47,7 +47,7 @@ namespace MergeCMD
                 //if(FI!=null)
                 foreach (FileInfo fI in dI.GetFiles())
                 {
-                    if (fI.Name == filename)
+                    if (fI.Name.ToLower() == filename.ToLower())
                         fileList.Add(fI.FullName);
                 }
             }
