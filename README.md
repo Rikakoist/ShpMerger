@@ -1,5 +1,5 @@
 ## ShpMerger
-(ArcObjects, ArcMap tool) Merge feature files (e.g. *.shp) with same file name in selected directory (recursively). (For data downloaded from [1:25万全国基础地理数据库](https://www.webmap.cn/commres.do?method=result25W "1:25万全国基础地理数据库"))
+(ArcObjects, ArcMap tool) Merge Shapefile (*.shp) with the same file name (non case-sensitive) in selected directory (recursively). (For data downloaded from [1:25万全国基础地理数据库](https://www.webmap.cn/commres.do?method=result25W "1:25万全国基础地理数据库"))
 - Build with Visual Studio 2017 and ArcGIS 10.4.
 
 ### Instruction:
