@@ -38,13 +38,22 @@ namespace MergeCMD
 
         private void SelectFolder(object sender, EventArgs e)
         {
-            FolderBrowserDialog FBD = new FolderBrowserDialog()
+            FolderBrowserDialog FBD = new FolderBrowserDialog();
+            if (sender == RootDirBtn)
             {
-                Description = "Select root path..."
-            };
-            if (FBD.ShowDialog() == DialogResult.OK)
+                FBD.Description= "Select root path...";
+                if (FBD.ShowDialog() == DialogResult.OK)
+                {
+                    MS.RootDir = FBD.SelectedPath;
+                }
+            }
+            if (sender == OutDirBtn)
             {
-                MS.RootDir = FBD.SelectedPath;
+                FBD.Description = "Select out path...";
+                if (FBD.ShowDialog() == DialogResult.OK)
+                {
+                    MS.OutDir = FBD.SelectedPath;
+                }
             }
             FBD.Dispose();
         }
@@ -72,6 +81,7 @@ namespace MergeCMD
         private void SaveToRootChanged(object sender, EventArgs e)
         {
             OutDirBtn.Enabled = OutDirTextBox.Enabled = !SaveToRootDirCheckBox.Checked;
+            OutDirBtn.Cursor = SaveToRootDirCheckBox.Checked ? Cursors.No : Cursors.Hand;
         }
 
         private void ExecMerge(object sender, EventArgs e)
@@ -98,11 +108,6 @@ namespace MergeCMD
             }
             MS.Save();
             DialogResult = DialogResult.OK;
-        }
-
-        private void CancelMerge(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.Cancel;
         }
     }
 }

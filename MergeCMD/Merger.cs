@@ -161,6 +161,8 @@ namespace MergeCMD
             if (M.ShowDialog() == DialogResult.OK)
             {
                 MergeFunc MF = new MergeFunc(M.RootDir, M.Filename,M.OutDir);
+                TM = new System.Windows.Forms.Timer();
+                SW.Reset();
 
                 Geoprocessor GP = new Geoprocessor()
                 {
@@ -178,7 +180,6 @@ namespace MergeCMD
                 pProDlg.CancelEnabled = true;
                 pProDlg.Title = "Merge in progress...";
                 pProDlg.Description = "Please wait patiently...";
-
                 pProDlg.Animation = esriProgressAnimationTypes.esriProgressSpiral;
 
                 pStepPro = pProDlg as IStepProgressor;
@@ -189,6 +190,7 @@ namespace MergeCMD
 
                 GP.Execute(MF.GetMerge(), pTrackCancel);
             }
+            M.Dispose();          
         }
 
         private void TM_Tick(object sender, EventArgs e)
@@ -198,7 +200,7 @@ namespace MergeCMD
 
         private void GP_ToolExecuting(object sender, ToolExecutingEventArgs e)
         {
-            pStepPro.Message = "Merging...";
+            pStepPro.Message = "Getting things ready...";
             TM.Start();
             SW.Start();
         }
@@ -207,7 +209,8 @@ namespace MergeCMD
         {
             TM.Stop();
             SW.Stop();
-            pStepPro.Message = string.Format("Finished...({0})", SW.Elapsed.ToString("hh\\:mm\\:ss"));
+            pStepPro.Message = string.Format("Finished...({0}), may not respond for a while.", SW.Elapsed.ToString("hh\\:mm\\:ss"));
+            TM.Dispose();
             Thread.Sleep(1000);
             pProDlg.HideDialog();
         }

@@ -51,17 +51,18 @@
             // 
             this.RootDirTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.RootDirTextBox.Location = new System.Drawing.Point(63, 21);
+            this.RootDirTextBox.Location = new System.Drawing.Point(67, 21);
             this.RootDirTextBox.Name = "RootDirTextBox";
-            this.RootDirTextBox.Size = new System.Drawing.Size(295, 20);
+            this.RootDirTextBox.Size = new System.Drawing.Size(304, 20);
             this.RootDirTextBox.TabIndex = 1;
             // 
             // RootDirBtn
             // 
             this.RootDirBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.RootDirBtn.Location = new System.Drawing.Point(370, 19);
+            this.RootDirBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.RootDirBtn.Location = new System.Drawing.Point(377, 19);
             this.RootDirBtn.Name = "RootDirBtn";
-            this.RootDirBtn.Size = new System.Drawing.Size(75, 23);
+            this.RootDirBtn.Size = new System.Drawing.Size(68, 23);
             this.RootDirBtn.TabIndex = 0;
             this.RootDirBtn.Text = "Browse...";
             this.RootDirBtn.UseVisualStyleBackColor = true;
@@ -70,7 +71,7 @@
             // RootDirLabel
             // 
             this.RootDirLabel.AutoSize = true;
-            this.RootDirLabel.Location = new System.Drawing.Point(6, 25);
+            this.RootDirLabel.Location = new System.Drawing.Point(11, 25);
             this.RootDirLabel.Name = "RootDirLabel";
             this.RootDirLabel.Size = new System.Drawing.Size(47, 13);
             this.RootDirLabel.TabIndex = 0;
@@ -79,7 +80,7 @@
             // FileNameLabel
             // 
             this.FileNameLabel.AutoSize = true;
-            this.FileNameLabel.Location = new System.Drawing.Point(6, 64);
+            this.FileNameLabel.Location = new System.Drawing.Point(11, 65);
             this.FileNameLabel.Name = "FileNameLabel";
             this.FileNameLabel.Size = new System.Drawing.Size(52, 13);
             this.FileNameLabel.TabIndex = 0;
@@ -88,9 +89,10 @@
             // FileNameBtn
             // 
             this.FileNameBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.FileNameBtn.Location = new System.Drawing.Point(370, 58);
+            this.FileNameBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.FileNameBtn.Location = new System.Drawing.Point(377, 59);
             this.FileNameBtn.Name = "FileNameBtn";
-            this.FileNameBtn.Size = new System.Drawing.Size(75, 23);
+            this.FileNameBtn.Size = new System.Drawing.Size(68, 23);
             this.FileNameBtn.TabIndex = 2;
             this.FileNameBtn.Text = "Browse...";
             this.FileNameBtn.UseVisualStyleBackColor = true;
@@ -100,15 +102,15 @@
             // 
             this.FileNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.FileNameTextBox.Location = new System.Drawing.Point(63, 60);
+            this.FileNameTextBox.Location = new System.Drawing.Point(67, 61);
             this.FileNameTextBox.Name = "FileNameTextBox";
-            this.FileNameTextBox.Size = new System.Drawing.Size(295, 20);
+            this.FileNameTextBox.Size = new System.Drawing.Size(304, 20);
             this.FileNameTextBox.TabIndex = 3;
             // 
             // ExecBtn
             // 
             this.ExecBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ExecBtn.Location = new System.Drawing.Point(89, 264);
+            this.ExecBtn.Location = new System.Drawing.Point(92, 242);
             this.ExecBtn.Name = "ExecBtn";
             this.ExecBtn.Size = new System.Drawing.Size(75, 23);
             this.ExecBtn.TabIndex = 4;
@@ -119,18 +121,18 @@
             // CancelBtn
             // 
             this.CancelBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.CancelBtn.Location = new System.Drawing.Point(295, 264);
+            this.CancelBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.CancelBtn.Location = new System.Drawing.Point(317, 242);
             this.CancelBtn.Name = "CancelBtn";
             this.CancelBtn.Size = new System.Drawing.Size(75, 23);
             this.CancelBtn.TabIndex = 5;
             this.CancelBtn.Text = "Cancel";
             this.CancelBtn.UseVisualStyleBackColor = true;
-            this.CancelBtn.Click += new System.EventHandler(this.CancelMerge);
             // 
             // OverwriteOptCheckBox
             // 
             this.OverwriteOptCheckBox.AutoSize = true;
-            this.OverwriteOptCheckBox.Location = new System.Drawing.Point(89, 187);
+            this.OverwriteOptCheckBox.Location = new System.Drawing.Point(89, 183);
             this.OverwriteOptCheckBox.Name = "OverwriteOptCheckBox";
             this.OverwriteOptCheckBox.Size = new System.Drawing.Size(104, 17);
             this.OverwriteOptCheckBox.TabIndex = 2;
@@ -140,7 +142,7 @@
             // AddData2MapCheckBox
             // 
             this.AddData2MapCheckBox.AutoSize = true;
-            this.AddData2MapCheckBox.Location = new System.Drawing.Point(89, 213);
+            this.AddData2MapCheckBox.Location = new System.Drawing.Point(89, 209);
             this.AddData2MapCheckBox.Name = "AddData2MapCheckBox";
             this.AddData2MapCheckBox.Size = new System.Drawing.Size(172, 17);
             this.AddData2MapCheckBox.TabIndex = 3;
@@ -168,26 +170,28 @@
             // OutDirBtn
             // 
             this.OutDirBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.OutDirBtn.Location = new System.Drawing.Point(370, 99);
+            this.OutDirBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.OutDirBtn.Location = new System.Drawing.Point(377, 99);
             this.OutDirBtn.Name = "OutDirBtn";
-            this.OutDirBtn.Size = new System.Drawing.Size(75, 23);
+            this.OutDirBtn.Size = new System.Drawing.Size(68, 23);
             this.OutDirBtn.TabIndex = 5;
             this.OutDirBtn.Text = "Browse...";
             this.OutDirBtn.UseVisualStyleBackColor = true;
+            this.OutDirBtn.Click += new System.EventHandler(this.SelectFolder);
             // 
             // OutDirTextBox
             // 
             this.OutDirTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.OutDirTextBox.Location = new System.Drawing.Point(63, 101);
+            this.OutDirTextBox.Location = new System.Drawing.Point(67, 101);
             this.OutDirTextBox.Name = "OutDirTextBox";
-            this.OutDirTextBox.Size = new System.Drawing.Size(295, 20);
+            this.OutDirTextBox.Size = new System.Drawing.Size(304, 20);
             this.OutDirTextBox.TabIndex = 6;
             // 
             // OutDirLabel
             // 
             this.OutDirLabel.AutoSize = true;
-            this.OutDirLabel.Location = new System.Drawing.Point(6, 105);
+            this.OutDirLabel.Location = new System.Drawing.Point(11, 105);
             this.OutDirLabel.Name = "OutDirLabel";
             this.OutDirLabel.Size = new System.Drawing.Size(42, 13);
             this.OutDirLabel.TabIndex = 0;
@@ -196,7 +200,7 @@
             // SaveToRootDirCheckBox
             // 
             this.SaveToRootDirCheckBox.AutoSize = true;
-            this.SaveToRootDirCheckBox.Location = new System.Drawing.Point(89, 161);
+            this.SaveToRootDirCheckBox.Location = new System.Drawing.Point(89, 157);
             this.SaveToRootDirCheckBox.Name = "SaveToRootDirCheckBox";
             this.SaveToRootDirCheckBox.Size = new System.Drawing.Size(158, 17);
             this.SaveToRootDirCheckBox.TabIndex = 1;
@@ -208,7 +212,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(475, 308);
+            this.ClientSize = new System.Drawing.Size(475, 282);
             this.Controls.Add(this.GeneralGroupBox);
             this.Controls.Add(this.AddData2MapCheckBox);
             this.Controls.Add(this.SaveToRootDirCheckBox);
